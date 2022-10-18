@@ -5,6 +5,12 @@ function Login(){
     const navigate = useNavigate();
     const [nickname, setNickname] = useState('');
 
+    const onCheckEnter = (e) => {
+        if(e.key === "Enter"){
+            handleSubmit(e);
+        }
+    }
+
     const handleChangeNickname = (e) => {
         setNickname(e.target.value);
     };
@@ -17,7 +23,7 @@ function Login(){
 
     return(
         <div className='d-flex flex-column justify-content-center align-items-center vh-100'>
-        <form className="d-flex">
+        <form className="d-flex" onKeyPress={onCheckEnter}>
             <div className="card d-flex flex-row align-items-center">
                 <label htmlFor="user-name-input" style={{width: 60}}>
                     닉네임

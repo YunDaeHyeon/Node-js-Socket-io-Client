@@ -8,19 +8,24 @@ import { useState } from "react";
 function NicknameForm({ handleSubmitNickname }){
     const [nickname, setNickname] = useState('');
 
+    const onCheckEnter = (e) => {
+        if(e.key === "Enter"){
+            handleSubmit(e);
+        }
+    };
+
     const handleChangeNickname = (e) => {
         setNickname(e.target.value);
     };
 
     const handleSubmit = (e) => {
-        console.log(e);
         e.preventDefault();
         handleSubmitNickname(nickname);
         setNickname('');
     };
 
     return(
-        <form className="d-flex">
+        <form className="d-flex" onKeyPress={onCheckEnter}>
             <div className="card d-flex flex-row align-items-center">
                 <label htmlFor="user-name-input" style={{width: 60}}>
                     닉네임
