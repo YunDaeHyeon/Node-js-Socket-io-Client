@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { createContext } from "react";
 import socketIo from 'socket.io-client';
 
-export const socket = socketIo.connect(String(process.env.REACT_APP_BACK_URL));
+export const socket = socketIo.connect("https://daehyeon-chat-server.herokuapp.com");
 export const SocketContext = createContext(socket);
 export const SOCKET_EVENT = {
     JOIN_ROOM : "JOIN_ROOM",
