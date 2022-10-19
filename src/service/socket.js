@@ -12,6 +12,8 @@ export const SOCKET_EVENT = {
 };
 
 // 서버가 보낸 데이터를 가공하는 함수
+
+// makeMessage : 채팅 요청, 응답 처리
 export const makeMessage = (pongData) => {
     const { prevNickname, nickname, content, type, time } = pongData;
 
@@ -40,6 +42,16 @@ export const makeMessage = (pongData) => {
         nickname : nicknameLabel,
         content: contentLabel,
         time: dayjs(time).format("HH:mm"),
+    };
+};
+
+// makeUserList - Join 이벤트 처리
+export const makeUserList = (pongData) => {
+    const { nickname, type } = pongData;
+    if(type === SOCKET_EVENT.JOIN_ROOM){
+        return {
+            nickname
+        }
     };
 };
 

@@ -3,6 +3,7 @@ import ChatRoom from './ChatRoom';
 import NicknameForm from './NicknameForm';
 import { socket, SocketContext, SOCKET_EVENT } from '../service/socket';
 import { useLocation } from 'react-router-dom';
+import UserListForm from './UserListForm';
 
 /*
     Event List
@@ -49,12 +50,17 @@ function Home() {
     */
     return (
     <SocketContext.Provider value={socket}>
-        <div className='d-flex flex-column justify-content-center align-items-center vh-100'>
-            <div>
-                <h4>🥳현재 채팅방은 room 1 입니다.</h4>
+        <div className='d-flex justify-content-center'>
+            <div className='d-flex flex-column justify-content-center align-items-center vh-100'>
+                <div>
+                    <h4>🥳현재 채팅방은 room 1 입니다.</h4>
+                </div>
+                <NicknameForm handleSubmitNickname={handleSubmitNickname}/>
+                <ChatRoom nickname={nickname}/>
             </div>
-            <NicknameForm handleSubmitNickname={handleSubmitNickname}/>
-            <ChatRoom nickname={nickname}/>
+            <div className='d-flex flex-column justify-content-center align-items-center vh-100'>
+                <UserListForm/>
+            </div>
         </div>
     </SocketContext.Provider>
     );

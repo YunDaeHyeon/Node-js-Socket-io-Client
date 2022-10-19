@@ -42,6 +42,14 @@ button.with-icon{
     overflow-y: auto;
 }
 
+.user-list-window{
+    width: 240px;
+    height: 410px;
+    margin-top: 40px;
+    margin-left: 20px;
+    overflow-y: auto;
+}
+
 /* 채팅 input */
 .form-control{
     resize: none;
