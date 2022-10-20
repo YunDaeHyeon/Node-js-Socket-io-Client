@@ -50,6 +50,7 @@ export const makeMessage = (pongData) => {
 
 // makeUserList - Join 이벤트 처리
 export const makeUserList = (pongData) => {
+    console.log(pongData);
     const { joinUserList, type } = pongData;
     if(type === SOCKET_EVENT.JOIN_ROOM || type === SOCKET_EVENT.UPDATE_NICKNAME || type === SOCKET_EVENT.ROOM_EXIT){
         return joinUserList; // 현재 접속중인 모든 사용자 (Array) 반환

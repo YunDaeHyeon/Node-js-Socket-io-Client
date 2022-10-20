@@ -24,8 +24,8 @@ function Home() {
     const [nickname, setNickname] = useState(state.nickname);
 
     const handleSubmitNickname = useCallback(newNickname => {
-        prevNickname.current = nickname;
-        setNickname(newNickname);
+        prevNickname.current = nickname; // 기존 닉네임을 prevNickname으로 이동
+        setNickname(newNickname); // 새로운 닉네임을 nickname state에 적용
     }, [nickname]);
 
     const handleServerExit = () => {
@@ -33,20 +33,12 @@ function Home() {
         navigate('/login');
     };
 
-    useEffect(()=>{
-        // 컴포넌트 언마운트
-        return () => {
-            console.log("컴포넌트 언마운트");
-            socket.disconnect();
-        }
-    });
-
     useEffect(() => {
     // 닉네임이 변경될 때
         if(prevNickname.current){
           socket.emit(SOCKET_EVENT.UPDATE_NICKNAME, { // 이전 닉네임과 변경된 닉네임 전송
-            prevNickname: prevNickname.current,
-            nickname,
+            prevNickname: prevNickname.current, // 이전 닉네임
+            nickname, // 변경된 닉네임
             });
         } else {
           // JOIN 이벤트 타입과 닉네임을 서버에 전송 (로그인 기능이 없기에 App 컴포넌트가 마운트될 때 JOIN_ROOM emit)
