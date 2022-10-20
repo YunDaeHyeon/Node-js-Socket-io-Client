@@ -18,7 +18,15 @@ function Login(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate('/home', {state:{ nickname }})
+        
+        const noContent = nickname.trim() === ""
+        // 닉네임을 입력하지 않으면
+        if(noContent){
+            alert("🥲최소 1글자 이상 닉네임을 적어주세요");
+            return;
+        }
+
+        navigate('/home', {state: { nickname }});
         socket.connect();
         setNickname('');
     };
@@ -27,7 +35,7 @@ function Login(){
         <div className='d-flex flex-column justify-content-center align-items-center vh-100'>
         <form className="d-flex" onKeyPress={onCheckEnter}>
             <div className="card d-flex flex-row align-items-center">
-                <label htmlFor="user-name-input" style={{width: 60}}>
+                <label htmlFor="user-name-input" className='user-name-input-label'>
                     닉네임
                 </label>
                 <input

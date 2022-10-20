@@ -17,6 +17,25 @@ import UserListForm from './UserListForm';
     on - 서버 <-> 클라이언트 데이터 !! 받기 !!
 */
 
+// 예, 아니요 판별 다이얼로그 (confirm)
+const useConfirm = (message = "", onConfirm, onCancel) => {
+    if (!onConfirm || typeof onConfirm !== "function") { 
+        return; // 매개변수 onConfirm가 없거나 onConfirm이 함수가 아나라면 return 실행
+    }
+    if (!onCancel || typeof onCancel !== "function") { // onCancle은 필수요소는 아님
+        return;
+    }
+
+    const confirmAction = () =>{
+        if(window.confirm(message)){
+            onConfirm();
+        }else{
+            onCancel();
+        }
+    }
+    return confirmAction;
+};
+
 function Home() {
     const { state } = useLocation();
     const navigate = useNavigate();
@@ -28,10 +47,19 @@ function Home() {
         setNickname(newNickname); // 새로운 닉네임을 nickname state에 적용
     }, [nickname]);
 
-    const handleServerExit = () => {
+
+    const handleServerExitSuccess = () => {
         socket.emit("ROOM_EXIT", {nickname}); // 접속 종료 이벤트와 닉네임 서버로 전송
         navigate('/login');
-    };
+    }
+    const handleServerExitCancle = () => {
+        console.log("취소되었습니다.");
+    }
+    const handleServerExit = useConfirm(
+        "🙋연결을 종료할까요?",
+        handleServerExitSuccess,
+        handleServerExitCancle
+    )
 
     useEffect(() => {
     // 닉네임이 변경될 때
