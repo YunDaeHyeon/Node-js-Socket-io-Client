@@ -25,7 +25,7 @@ function NicknameForm({ handleSubmitNickname }){
     };
 
     return(
-        <form className="d-flex" onKeyPress={onCheckEnter}>
+        <form className="d-flex nickname-form" onKeyPress={onCheckEnter}>
             <div className="card d-flex flex-row align-items-center">
                 <label htmlFor="user-name-input" style={{width: 60}}>
                     닉네임

@@ -81,7 +81,7 @@ function Home() {
         <div className='d-flex justify-content-center'>
             <div className='d-flex flex-column justify-content-center align-items-center vh-100'>
                 <div>
-                    <h4>🥳현재 채팅방은 room 1 입니다.</h4>
+                    <h4 className='home-title'>🥳현재 채팅방은 room 1 입니다.</h4>
                 </div>
                 <NicknameForm handleSubmitNickname={handleSubmitNickname}/>
                 <ChatRoom nickname={nickname}/>
@@ -91,7 +91,7 @@ function Home() {
                 <button
                     type="button"
                     style={{marginTop:20}}
-                    className="btn btn-primary send-btn"
+                    className="btn btn-primary send-btn exit-btn"
                     onClick={handleServerExit}
                     >나가기</button>
             </div>

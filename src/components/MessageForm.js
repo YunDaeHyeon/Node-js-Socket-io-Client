@@ -61,7 +61,7 @@ function MessageForm({nickname}){
     }
 
     return(
-        <form className="card" onKeyPress={onCheckEnter}>
+        <form className="card message-form" onKeyPress={onCheckEnter}>
             <div className="d-flex align-items-center">
                 <textarea
                     className="form-control"

@@ -39,7 +39,7 @@ function ChatRoom({nickname}){
     }, [socket, handleReceiveMessage]);
 
     return (
-        <div className="d-flex flex-column" style={{width: 720}}>
+        <div className="d-flex flex-column chat-room">
             <div className="text-box">
                 <span>{nickname}</span>님 환영합니다!
             </div>
