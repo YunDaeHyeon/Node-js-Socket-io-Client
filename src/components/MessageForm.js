@@ -17,16 +17,32 @@ function MessageForm({nickname}){
 
     const onCheckEnter = (e) => {
         if(e.key === "Enter"){
+            e.preventDefault();
             // 만약, shiftKey를 누른게 아니라면 (Enter만)
             if(!e.shiftKey){ // textarea에서 shiftKey + Enter는 개행, 일반 Enter는 Submit
-                handleSendMessage();
+                // 공백 제거
+                const noContent = typingMessage.trim() === "";
+                    
+                // 아무런 메시지가 없다면 아무런 일 X
+                if(noContent){
+                    return;
+                }
+            
+                // 메시지가 있다면 nickname과 message를 SEND_MESSAGE 타입과 함께 서버 전송
+                socket.emit(SOCKET_EVENT.SEND_MESSAGE, {
+                    nickname,
+                    content : typingMessage,
+                });
+                // state 값은 공백으로 변경
+                setTypingMessage("");
             }
             messageInput.current.focus();
         }
     };
 
     // 버튼 클릭 이벤트
-    const handleSendMessage = () => {
+    const handleSendMessage = (e) => {
+        e.preventDefault();
         // 공백 제거
         const noContent = typingMessage.trim() === "";
 

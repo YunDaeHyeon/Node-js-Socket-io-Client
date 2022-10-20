@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import ChatRoom from './ChatRoom';
 import NicknameForm from './NicknameForm';
 import { socket, SocketContext, SOCKET_EVENT } from '../service/socket';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import UserListForm from './UserListForm';
 
 /*
@@ -19,6 +19,7 @@ import UserListForm from './UserListForm';
 
 function Home() {
     const { state } = useLocation();
+    const navigate = useNavigate();
     const prevNickname = useRef(null); // prevNickname의 변경은 컴포넌트를 rerender하지 않는다.
     const [nickname, setNickname] = useState(state.nickname);
 
@@ -27,11 +28,18 @@ function Home() {
         setNickname(newNickname);
     }, [nickname]);
 
+    const handleServerExit = () => {
+        socket.emit("ROOM_EXIT", {nickname}); // 접속 종료 이벤트와 닉네임 서버로 전송
+        navigate('/login');
+    };
+
     useEffect(()=>{
+        // 컴포넌트 언마운트
         return () => {
-          socket.disconnect(); // App Component가 Unmount될 때 소켓 연결 끊기
+            console.log("컴포넌트 언마운트");
+            socket.disconnect();
         }
-    }, []);
+    });
 
     useEffect(() => {
     // 닉네임이 변경될 때
@@ -60,6 +68,12 @@ function Home() {
             </div>
             <div className='d-flex flex-column justify-content-center align-items-center vh-100'>
                 <UserListForm/>
+                <button
+                    type="button"
+                    style={{marginTop:20}}
+                    className="btn btn-primary send-btn"
+                    onClick={handleServerExit}
+                    >나가기</button>
             </div>
         </div>
     </SocketContext.Provider>

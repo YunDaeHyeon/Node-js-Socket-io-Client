@@ -1,14 +1,15 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { SocketContext, makeUserList, SOCKET_EVENT } from "../service/socket";
 
-function UserListForm({nickname}){
+function UserListForm(){
     const [userList, setUserList] = useState([]);
     const socket = useContext(SocketContext);
 
     // JOIN_ROOM 이벤트 콜백
     const handleJoinEvent = useCallback(pongData => {
-        const newUser = makeUserList(pongData);
-        setUserList(userList => [...userList, newUser]);
+        if(pongData.type !== SOCKET_EVENT.SEND_MESSAGE){
+            setUserList(makeUserList(pongData));
+        }
     }, []);
 
     useEffect(()=>{ // 서버로부터 전달되는 이벤트
@@ -23,10 +24,11 @@ function UserListForm({nickname}){
             <div className="user-list-window card">
                 <span style={{marginLeft: 10, marginBottom: 10}}>👥 현재 접속중인 사용자</span>
                 {
-                    userList.map((list, index) => {
-                        const {nickname} = list;
+                    userList && userList.map((userName, index) => {
                         return(
-                            <p key={index} style={{marginBottom:5}}>{nickname}</p>
+                            <div key={index}>
+                                <p style={{marginBottom:5}}>{userName}</p>
+                            </div>
                         );
                     })
                 }

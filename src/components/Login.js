@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { socket } from '../service/socket';
 
 function Login(){
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ function Login(){
     const handleSubmit = (e) => {
         e.preventDefault();
         navigate('/home', {state:{ nickname }})
+        socket.connect();
         setNickname('');
     };
 
